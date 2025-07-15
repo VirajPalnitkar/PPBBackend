@@ -2,7 +2,6 @@ require('dotenv').config(); // Load environment variables at the very beginning
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const corsOptions = require('./config/corsOptions');
 const orderRoutes = require('./routes/orderRoutes');
 const productRoutes = require('./routes/productRoutes');
 const errorHandler = require('./middleware/errorHandler');
@@ -13,6 +12,13 @@ const app = express();
 connectDB();
 
 // Middleware
+// src/app.js
+const corsOptions = {
+  origin: '*', // <--- Allows requests from ANY origin. Use with caution in production.
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Note: credentials cannot be used with '*'
+  optionsSuccessStatus: 204,
+};
 app.use(cors(corsOptions));
 app.use(express.json()); // Body parser for JSON requests
 
